@@ -1,0 +1,181 @@
+<!-- Sale & Revenue Start -->
+<div class="container pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-users fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Total Users</p>
+                    <h6 class="mb-0"><i class="bi bi-people-fill"> {{totalUsers}}</i></h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-users fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Active Users</p>
+                    <h6 class="mb-0"><i class="bi bi-people-fill"> {{activeUsers}} </i></h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-bar fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Total Sale</p>
+                    <h6 class="mb-0">₹ {{totalSale.[0].totalAmount}} </h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-pie fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Total Revenue</p>
+                    <h6 class="mb-0">₹ {{totalRevenue.[0].totalAmount}}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Sale & Revenue End -->
+
+<!-- Sales Chart Start -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <canvas id="myChart">
+            </canvas>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <canvas id="myChart2"></canvas>
+        </div>
+        <div class="card">
+            <canvas id="newChart"></canvas>
+        </div>
+    </div>
+</div>
+<!-- Recent Sales Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-light text-center rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">Recent Salse</h6>
+            <a href="">Show All</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table text-start align-middle table-bordered table-hover mb-0">
+                <thead>
+                    <tr class="text-dark">
+                        <th scope="col"><input class="form-check-input" type="checkbox"></th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Invoice</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each recentSale}}
+                    <tr>
+                        <td><input class="form-check-input" type="checkbox"></td>
+                        <td>{{this.date}}</td>
+                        <td>{{this._id}}</td>
+                        <td>{{this.deliveryDetails.firstName}}</td>
+                        <td>{{this.totalAmount}}</td>
+                        <td>{{this.paymentMethod}}</td>
+                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Recent Sales End -->
+
+<!-- Footer Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-light rounded-top p-4">
+        <div class="row">
+            <div class="col-12 col-sm-6 text-center text-sm-start">
+                &copy; <a href="#">Your Site Name</a>, All Right Reserved.
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+<script type="text/javascript"></script>
+
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['COD', 'Online', 'payment succuss'],
+            datasets: [{
+                label: 'payment methods',
+                data: [{{ paymentStatus }}],
+            backgroundColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54,162,235,1)',
+                'rgba(255,206,86,1)',
+            ],
+        }]
+
+    },
+        options: {
+        responsive: true,
+    },
+    })
+</script>
+
+<script>
+    var earning = document.getElementById('myChart2').getContext('2d');
+    var myChart2 = new Chart(earning, {
+        type: 'line',
+        data: {
+            labels: ['Placed', 'Shipped', 'Delivered', 'Cancelled',],
+            datasets: [{
+                label: 'Order Status',
+                data: [{{ deliveryStatus }}],
+            backgroundColor: [
+                'rgba(255, 206, 86, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(60, 170, 70, 1)',
+                'rgba(255, 0, 0, 1)',
+            ],
+        }]
+    },
+        options: {
+        responsive: true,
+    }
+    });
+</script>
+<script>
+    var earning = document.getElementById('newChart').getContext('2d');
+    var newChart = new Chart(earning, {
+        type: 'bar',
+        data: {
+            labels: ['Placed', 'Shipped', 'Delivered', 'Cancelled',],
+            datasets: [{
+                label: 'Order Status',
+                data: [2, 3, 4, 2],
+                backgroundColor: [
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(60, 170, 70, 1)',
+                    'rgba(255, 0, 0, 1)',
+                ],
+            }]
+        },
+        options: {
+            responsive: true,
+        }
+    });
+</script>

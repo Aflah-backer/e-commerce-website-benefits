@@ -1,0 +1,91 @@
+<section>
+    <div class="container mt-4">
+        <table class="table table-dark table-striped" id="orderTable">
+            <thead>
+                <tr>
+                    <th scope="col-md-3">Date</th>
+                    <th scope="col-md-3">User</th>
+                    <th scope="col-md-3">Product</th>
+                    <th scope="col-md-3">Payment Method</th>
+                    <th scope="col-md-3">Delivery To</th>
+                    <th scope="col-md-3">Total Amount</th>
+                    <th scope="col-md-3">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each orders}}
+                <tr>
+                    <th scope="row" style="width: 14rem;">{{this.date}}</th>
+                    <td scope="row" style="width: 14rem;">User: {{this.user.Name}} <br>
+                        Email: {{this.user.Email}} <br>
+                        Mobile: {{this.user.MobNumber}} </td>
+                    <td scope="row" style="width: 14rem;">Product: {{this.product.title}} <br>
+                        Brand: {{this.product.brand}}
+                        Price: ₹{{this.product.price}}</td>
+                    <td scope="row" style="width: 14rem;">Method: {{this.paymentMethod}}</td>
+                    <td scope="row" style="width: 14rem;">Name: {{this.deliveryDetails.firstName}}
+                        {{this.deliveryDetails.lastName}} <br>
+                        Address: {{this.deliveryDetails.address}} <br>
+                        Mobile: {{this.deliveryDetails.mobailNumber}} <br>
+                        Pincode: {{this.deliveyDetails.pincode}}</td>
+                    <td scope="row" style="width: 14rem;"> ₹{{this.totalAmount}}</td>
+                    <td scope="row" style="width: 14rem;">
+                        <button type="button" class="btn btn-success mt-4" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal{{this._id}}">
+                            {{this.deliveryStatus}}
+                        </button>
+
+                        <div class="modal fade" id="exampleModal{{this._id}}" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Status</h5>
+                                        <button type="button" class="close btn btn-dark" data-bs-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="changeStatus{{this._id}}"
+                                            onsubmit="changeDeliveryStatus('{{this._id}}')">
+                                            <input type="text" value="{{this._id}}" name="ordersId" hidden>
+                                            <select class="form-select" name="delivery" id="">
+                                                <option value="">{{this.deliveryStatus}}</option>
+                                                <option value="shipped">Shipped</option>
+                                                <option onclick="" value="delivered">Delivered</option>
+                                                <option onclick="" value="cancel">Cancel</option>
+                                            </select>
+                                            <button class="btn btn-success mt-3" type="submit">Done</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        $('#orderTable').dataTable()
+    })
+</script>
+
+<script>
+    function changeDeliveryStatus(orderId) {
+        $.ajax({
+            url: '/admin/changeDeliveryStatus',
+            method: 'post',
+            data: $('#changeStatus' + orderId).serialize(),
+            success: (response) => {
+                if (response) {
+                    location.reload()
+                }
+            }
+        })
+    }
+</script>

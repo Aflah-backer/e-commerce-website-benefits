@@ -1,0 +1,102 @@
+<header>
+	<!-- MAIN HEADER -->
+	<div id="header">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<!-- LOGO -->
+				<div class="col">
+					<div class="header-logo">
+						<a href="/" class="logo">
+							<p style="color: aliceblue; font-style: italic;" class="mb-0">Universel</p>
+							<h1 style="color: aliceblue; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"
+								class="mb-0">Benefit's</h1>
+							<p style="color: aliceblue; font-style: italic;" class="d-flex justify-content-end">Beats
+							</p>
+						</a>
+					</div>
+				</div>
+				<!-- /LOGO -->
+				<!-- ACCOUNT -->
+				<div class="col-md-3 clearfix">
+					<div class="header-ctn">
+
+						<div class="sign-log d-flex align-item-end mt-5">
+							{{#if logged}}
+							<div class="dropdown">
+								<a class="btn btn-transperent text-light" type="menu" data-bs-toggle="dropdown">
+									Hello..{{logged.Name}}
+								</a>
+								<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+									<li><button type="button" class="btn btn-light" data-bs-toggle="modal"
+											data-bs-target="#staticBackdrop">
+											My Profile
+										</button></li>
+									<li><a class="dropdown-item" href="/orders">My orderd</a></li>
+									<li><a class="dropdown-item" href="/logout">Logout</a></li>
+								</ul>
+							</div>
+							{{else}}
+							<a href="/signup">
+								<p style="color: #fff;">Sign up</p>
+							</a>
+							<a href="/login">
+								<p style="color: #fff;">Login</p>
+							</a>
+							{{/if}}
+						</div>
+					</div>
+				</div>
+				<!-- /ACCOUNT -->
+			</div>
+			<!-- row -->
+		</div>
+		<!-- container -->
+	</div>
+	<!-- /MAIN HEADER -->
+
+</header>
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+	aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="staticBackdropLabel">Settings</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+
+				<div class="row">
+					<div class="col-md-12 border-center">
+
+						<div class="text">
+							<h4 class="text-center">Profile Settings</h4>
+						</div>
+						<div class="row mt-2">
+							<form action="/edit_profile/{{logged._id}}" method="post">
+								<div class="col-md-12"><label class="labels">Name</label><input type="text"
+										name="Name" class="form-control" placeholder="enter name" value="{{logged.Name}}"></div>
+						</div>
+						<div class="row mt-3">
+							<div class="col-md-12"><label class="labels">Mobile Number</label><input type="text"
+									class="form-control" placeholder="enter phone number" name="MobNumber"
+									value="+91{{logged.MobNumber}}">
+							</div>
+							<div class="col-md-12"><label class="labels">Email ID</label><input type="text"
+									class="form-control" name="Email" placeholder="enter email id" value="{{logged.Email}}"></div>
+						</div>
+						<div class="mt-5 text-center"><button class="btn btn-dark profile-button" type="submit">Save
+								Profile</button></div>
+						</form>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>

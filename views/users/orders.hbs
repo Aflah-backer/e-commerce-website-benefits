@@ -1,0 +1,59 @@
+<section>
+  <div class="container ">
+    <div class="table-responsive">
+      <table class="table mt-5" style=" background-color: #fff; border-radius: 25px;">
+        <div class="mt-5">
+          <h3 style="columns: rgb(0, 0, 49); font-family: sans-serif;">My Orders</h3>
+        </div>
+        <tbody>
+          {{#each orders}}
+
+          <tr style="height: 6rem;">
+
+            <td scope="row" style="width: 14rem;" class="p-3"> <a href="/view-single-orders/{{this.products._id}}"><img
+                  class="shadow p-3 mt-2 rounded" style="width: 140px; height: 140px;"
+                  src="/product-images/{{this.products.images.[0].filename}}" alt=""></a>
+            </td>
+
+            <td scope="row">
+              <h6 style="margin-top: 4.5rem;">{{this.products.title}}</h6>
+            </td>
+            {{!-- <td scope="row" style="width: 14rem;">Date: {{this.date}}
+              Time: {{this.time}}
+            </td> --}}
+            {{!-- <td scope="row" style="width: 14rem;">{{this.deliveryDetails.firstName}}</td> --}}
+            <td scope="row" style="width: 14rem;">
+              <h6 style="margin-top: 4.5rem;">₹ {{this.products.price}}</h6>
+            </td>
+            {{!-- <td scope="row" style="width: 14rem;">Quantity: {{this.proCount}}</td> --}}
+            {{!-- <td scop="row" style="width: 14rem;">{{this.deliveryDetails.address}}</td> --}}
+            {{!-- <td scope="row" style="width: 14rem;">
+              <h6>Order Status: </h6>
+              <p class="text-success">{{this.status}}</p>
+            </td> --}}
+            <td scope="row" style="width: 14rem;">
+              <h6 style="margin-top: 4.5rem;">{{this.deliveryStatus}}</h6>
+              <p class="text-dark"> </p>
+            </td>
+            <td scope="row" style="width: 14rem;">
+              <p style="margin-top: 4rem;">
+                <button type="button" class="btn btn-tra btn-danger" data-mdb-toggle="tooltip" title="Remove item"
+                  id="RemoveProduct" onclick="removeProduct">Cancel Order
+                </button>
+              </p>
+            </td>
+            {{!-- <td scope="row" style="width: 14rem;">{{this.paymentMethod}} </td> --}}
+          </tr>
+
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<script>
+  $(document).ready(function () {
+    $('#productsTable').dataTable()
+  })
+
+</script>

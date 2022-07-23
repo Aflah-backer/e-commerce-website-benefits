@@ -1,0 +1,46 @@
+<section>
+    <div class="container mt-4">
+        <table class="table table-dark table-striped" id="userTable">
+            <thead>
+                <tr>
+                    <th scope="col-md-3">NO</th>
+                    <th scope="col-md-3">Name</th>
+                    <th scope="col-md-3">Email</th>
+                    <th scope="col-md-3">option</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row"></th>
+                    <td scope="row"></td>
+                    <td scope="row"></td>
+                    <td scope=""></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        $('#userTable').dataTable()
+    })
+</script>
+<script>
+
+    function userAction(userId, action) {
+        if (confirm('do you want to ' + action + ' user')) {
+            $.ajax({
+                url: "/admin/userAction",
+                data: {
+                    userId,
+                    action,
+                },
+                method: "post",
+                success: (response) => {
+                    $('#' + userId).load(location.href + " #" + userId);
+                }
+            })
+        }
+    }
+</script>

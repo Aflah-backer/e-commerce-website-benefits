@@ -1,0 +1,111 @@
+<!-- MINI HEADER -->
+<div id="top-header">
+
+    <div class="container d-flex justify-content-between">
+        <ul class="header-links p-3">
+        </ul>
+        <ul class="header-links">
+            <li><a href="/about" style="font-size: 15px;"> About</a></li>
+            <li><a href="/contactUs" style="font-size: 15px;"> contact Us </a></li>
+            <li class=""><a href="/" style="font-size: 15px;"> HOME</a></li>
+            <li class=""><a href="/shop" style="font-size: 15px;">SHOP</a></li>
+        </ul>
+        <ul style="display: flex; gap: 1rem">
+            <li><a href="/cart"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-cart3 ps-0" viewBox="0 0 16 16">
+                        <path
+                            d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z">
+                        </path>
+                    </svg><span class="badge bg-dark">{{cartCount}}</span></a></li>
+            <li>
+
+            </li>
+            <li><a href="/wishlist"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-star ml-5" viewBox="0 0 16 16">
+                        <path
+                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z">
+                        </path>
+                    </svg><span class="badge bg-dark">{{wishList}}</span>
+                </a></li>
+        </ul>
+    </div>
+
+</div>
+<!-- /MINI HEADER -->
+
+{{!-- poster --}}
+
+<img src="http://pae-web.presonusmusic.com/uploads/product_type/182/mediabar/1/mediabar.jpg" class="container-fluid"
+    alt="Responsive image">
+
+{{!-- poster end --}}
+{{!-- <div class="text">
+    <h3 class="d-flex justify-content-center">Top sellers</h3>
+</div> --}}
+{{!-- card start --}}
+
+<section>
+    <div class="container-fluid mt-2">
+        <div class="row">
+            {{#each products}}
+
+            <div class="col-md-3 d-flex justify-content-center">
+
+                <div class="card shadow mt-5 " style="width: 18rem;">
+                    <div class="d-flex justify-content-start"><span class="badge bg-danger">New</span></div>
+                    <a class="btn" onclick="add_to_wishlist('{{this._id}}')">
+                        <i class="bi bi-heart d-flex justify-content-end mt-2 p-2"></i></a>
+                    <a href="/viewSingleProductDetails/{{this._id}}">
+                        <img src="/product-images/{{this.images.[0].filename}}" class="card-img-top"
+                            style="height: 16rem; width: 17.9rem;" alt="..." />
+                        <div class="card-body mt-0" style="height: 10rem;">
+                            <h5 class="card-title d-flex justify-content-center">{{this.title}}</h5>
+                            <br>
+                            {{#if this.out}}
+                            <p class="card-text d-flex justify-content-center text-danger"><b>Out Of
+                                    Stock</b></p>
+                            {{else}}
+                            <p class="card-text d-flex justify-content-center"><b>₹{{this.price}}</b></p>
+                            {{/if}}
+                    </a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    </div>
+</section>
+{{!-- card end --}}
+{{!-- footer-start --}}
+<section>
+    <div class="container-fluid mt-5" style="height: 12rem; background-color: rgb(3, 16, 44);">
+        <p class="text-light p-5">email:baenefit9815@gmail.com</p>
+    </div>
+</section>
+{{!-- footer-end --}}
+<!-- bottom footer -->
+<div class="section" style="background-color: rgb(0, 0, 0);">
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <ul class="footer-payments">
+                    <li><a href="#"><i class="bi bi-credit-card"></i></a></li>
+                    <li><a href="#"><i class="bi bi-credit-card-2-back-fill"></i></a></li>
+                    <li><a href="#"><i class="bi bi-postcard-fill"></i></a></li>
+                    <li><a href="#"><i class="bi bi-credit-card-fill"></i></a></li>
+                    <li><a href="#"><i class="bi bi-credit-card-2-front"></i></a></li>
+                    <li><a href="#"><i class="bi bi-credit-card-2-back-fill"></i></a></li>
+                </ul>
+                <span>
+                    <p>This is my first e commerce web @ 2022</p>
+                </span>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /bottom footer -->
+{{!-- //script// --}}
+<script src="/javascripts/script.js"></script>

@@ -1,0 +1,129 @@
+<section class="h-100 gradient-custom">
+  <div class="container py-5">
+    <div class="row d-flex justify-content-center my-4">
+      <div class="col-md-8">
+        <div class="card mb-4">
+          <div class="card-header py-3 d-flex justify-content-between">
+            <p class="mb-0" style="font-size: x-large;">Your Cart</p>
+            <a href="/"><i class="bi bi-plus-square "></i></a>
+          </div>
+          <div class="card-body" id="cartNum">
+            <!-- Single item -->
+            {{#each products}}
+            <div class="row">
+              <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                <!-- Image -->
+                <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+                  <a href="/viewSingleProductDetails/{{this.products._id}}"> <img
+                      src="/product-images/{{this.products.images.[0].filename}}" class="w-100"
+                      alt="Blue Jeans Jacket" /></a>
+                  <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                </div>
+                <!-- Image -->
+              </div>
+
+              <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                <!-- Data -->
+                <p><strong>{{this.products.title}} </strong></p>
+                <p>Brand: {{this.products.brand}}</p>
+                <button type="button" class="btn btn-tra btn-lg me-1 mb-2" data-mdb-toggle="tooltip" title="Remove item"
+                  id="RemoveProduct" onclick="removeProduct('{{this._id}}','{{this.products._id}}') ">
+                  <i class="bi bi-trash-fill"></i>
+                </button>
+                <!-- Data -->
+              </div>
+
+              <div class="col-lg-4 col-md-6">
+                <!-- Quantity -->
+                <div class="the">
+                  <button
+                    onclick="changeProCount('{{this._id}}','{{this.products._id}}','{{this.products.quantity}}',-1)"
+                    class="button minus btn btn-dark" id="minus{{this._id }}"><i
+                      class="button bi bi-dash-circle"></i></button>
+                  <span class="text" id="{{this.products._id}}">{{this.proCount}}</span>
+                  <button
+                    onclick="changeProCount('{{this._id}}','{{this.products._id}}','{{this.products.quantity}}',1)"
+                    class="plus btn btn-dark" id="plus"><i class="bi bi-plus-circle"></i></button>
+                </div>
+                <!-- Quantity -->
+
+
+                <!-- Price -->
+                <p class="text-start text-md-center mt-5">
+                  <strong>₹{{this.products.price}} </strong>
+                </p>
+                <!-- Price -->
+              </div>
+            </div>
+            <hr>
+            {{/each}}
+            <!-- Single item -->
+            <div class="total">
+              <div class="d-flex justify-content-between  p-2 mb-2">
+                <h5 class="fw-bold mb-0">Total:</h5>
+                <h5 class="fw-bold mb-0">₹{{total }} </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card mb-4 mb-lg-0">
+          <div class="card-body">
+            <p><strong>We accept</strong></p>
+            <img class="me-2" width="45px"
+              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+              alt="Visa" />
+            <img class="me-2" width="45px"
+              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
+              alt="American Express" />
+            <img class="me-2" width="45px"
+              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+              alt="Mastercard" />
+            <img class="me-2" width="45px"
+              src="https://www.merchantmaverick.com/wp-content/uploads/2013/03/Paypal-Logo-2015.png"
+              alt="PayPal acceptance mark" />
+            <a href="/place_order/cart" class="btn text-uppercase text-light float-end"
+              style="background-color: rgb(1, 4, 46);"><b> Place Order
+              </b></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{!-- //script link// --}}
+<script src="/javascripts/script.js"></script>
+<script>
+  function removeProduct(cartId, proId) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't to delete this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: "/remove_product",
+            data: {
+              product: proId,
+              cart: cartId,
+            },
+            method: "post",
+            success: (response) => { },
+          });
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        }
+      })
+      .then(() => {
+        location.reload();
+      });
+  }
+
+  console.log("basim")
+
+
+</script>

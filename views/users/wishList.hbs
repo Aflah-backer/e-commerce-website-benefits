@@ -1,0 +1,57 @@
+<div class="cart-wrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main-heading mb-10">My wishlist</div>
+                <div class="table-wishlist">
+                    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th width="45%">Product Name</th>
+                                <th width="15%">Unit Price</th>
+                                <th width="15%"></th>
+                                <th width="15%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each products}}
+                            <tr>
+                                <td width="45%">
+                                    <div class="display-flex align-center">
+                                        <div class="img-product"><a
+                                                href="/viewSingleProductDetails/{{this.product._id}}">
+                                                <img src="/product-images/{{this.product.images.[0].filename}}" alt=""
+                                                    class="shadow p-3  rounded"></a>
+                                        </div>
+                                        <div class="name-product text-uppercase text-dark">
+                                            {{this.product.title}}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td width="15%" class="price">₹{{this.product.price}}</td>
+                                <td width="15%">
+                                    {{#if this.product.out}}
+                                    <h5 class="text-danger">Out Of Stock</h5>
+                                    {{else}}
+                                    <a href="/add-to-cart/{{this.product._id}}" class="round-black-btn small-btn">Add to
+                                        Cart</a>
+                                    {{/if}}
+                                </td>
+                                <td width="15%">
+                                    <button type="button" class="btn btn-tra btn-lg me-1 mb-2" data-mdb-toggle="tooltip"
+                                        title="Remove item" id="RemoveProduct"
+                                        onclick="removeProduct('{{this._id}}','{{this.product._id}}') ">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{!-- //sweet alert for add to wishlist// --}}
+<script src="/javascripts/script.js"></script>

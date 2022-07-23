@@ -1,0 +1,81 @@
+<!-- Sidebar Start -->
+<div class="container">
+	<div class="sidebar pe-4 pb-3 ">
+		<nav class="navbar navbar-light">
+			<a class="navbar-brand mx-4 mb-3">
+				<h3 class="text-dark"><i class=" me-2 text-dark"></i>Benefit's</h3>
+			</a>
+			<div class="d-flex align-items-center ms-4 mb-4">
+				<div class="position-relative">
+					<img class="rounded-circle" src="/images/faces/face8.jpg" alt="" style="width: 40px; height: 40px;">
+					<div
+						class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
+					</div>
+				</div>
+				<div class="ms-3 text-light">
+					<h6 class="mb-0 text-dark">Aflah Backer AK</h6>
+					<h6 class="mb-0 ">aflahbacker@gmail.com</h6>
+					<span>Admin</span>
+				</div>
+			</div>
+			<div class="navbar-nav w-100 ">
+				<a href="/admin" class="nav-item nav-link active"><i
+						class="fa fa-tachometer-alt me-2 "></i>Dashboard</a>
+				<div class="nav-item dropdown">
+					<div class="navbar-nav w-100 ">
+						<a href="#" class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown"><i
+								class="fa fa-laptop me-2 text-dark"></i>Products</a>
+						<div class="dropdown-menu bg-transparent border-0">
+							<a href="/admin/viewproducts" class="dropdown-item text-dark">Product List</a>
+							<a href="/admin/addProducts" class="dropdown-item text-dark">Product Add</a>
+							<a href="/admin/category" class="dropdown-item text-dark">Product Category</a>
+						</div>
+					</div>
+					<div class="nav-item dropdown">
+						<a href="#" class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown"><i
+								class="fa fa-laptop me-2 text-dark"></i>Orders</a>
+						<div class="dropdown-menu bg-transparent border-0">
+							<a href="/admin/viewOrders" class="dropdown-item text-dark">Orders List</a>
+							{{!-- <a href="" class="dropdown-item">Orders Details</a> --}}
+						</div>
+					</div>
+					<div class="nav-item dropdown">
+						<a href="#" class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown"><i
+								class="fa fa-laptop me-2 text-dark"></i>Users</a>
+						<div class="dropdown-menu bg-transparent border-0">
+							<a href="/admin/viewUser" class="dropdown-item text-dark">Users List</a>
+						</div>
+					</div>
+				</div>
+		</nav>
+	</div>
+	<!-- Sidebar End -->
+
+	<!-- Content Start -->
+	<div class="container">
+		<!-- Navbar Start -->
+		<nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+			<a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+				<h2 class="text-primary mb-0"><i class="	"></i></h2>
+			</a>
+			<a href="#" class="sidebar-toggler flex-shrink-0">
+				<i class="fa fa-bars"></i>
+			</a>
+			<div class="navbar-nav align-items-center ms-auto">
+
+
+				<div class="nav-item dropdown">
+					<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+						<img class="rounded-circle me-lg-2" src="/images/faces/face8.jpg" alt=""
+							style="width: 40px; height: 40px;">
+						<span class="d-none d-lg-inline-flex">Aflah Backer AK</span>
+					</a>
+					<div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+						<a href="#" class="dropdown-item">My Profile</a>
+						<a href="#" class="dropdown-item">Settings</a>
+						<a href="/admin/adminLogout" class="dropdown-item">Log Out</a>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<!-- Navbar End -->

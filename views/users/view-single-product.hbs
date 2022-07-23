@@ -1,0 +1,71 @@
+<div class="container mt-5 mb-5">
+
+    <div class="row d-flex justify-content-center">
+
+        <div class="col-md-10">
+
+            <div class="card">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="images p-3">
+
+                            <div class="text-center p-4"> <img id="main-image"
+                                    src="/product-images/{{products.images.[0].filename}}" width="450" /> </div>
+                            <div class="thumbnail text-center"> <img onclick="change_image(this)"
+                                    src="/product-images/{{products.images.[0].filename}}" width="70">
+                                <img onclick="change_image(this)" src="/product-images/{{products.images.[1].filename}}"
+                                    width="70"><img onclick="change_image(this)"
+                                    src="/product-images/{{products.images.[2].filename}}" width="70"><img
+                                    onclick="change_image(this)" src="/product-images/{{products.images.[3].filename}}"
+                                    width="70">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="product p-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center"><span class="ml-1">Brand {{products.brand}}
+                                    </span> </div>
+                                <a onclick="add_to_wishlist('{{products._id}}')" class="float end"><i
+                                        class="bi bi-heart d-flex justify-content-end mt-2 p-2"></i>
+                                </a>
+                            </div>
+                            <div class="mt-4 mb-3"> <span class="text-uppercase text-muted brand">{{products.category}}
+                                </span>
+                                <h5 class="text-uppercase">{{products.title}}</h5>
+                                <br>
+                                <h6 class="price">₹{{products.price}}</h6>
+                                <br>
+                            </div>
+                            <p>{{this.out}}</p>
+                            {{#if products.out}}
+                            <h5 class="text-danger">Out Of Stock</h5>
+                            {{else}}
+                            <div class="cart mt-4 align-items-center" style="display: flex; gap: 1rem"><a
+                                    href="/add-to-cart/{{products._id}}" class="btn btn-warning">Add To Cart</a>
+
+                                <a href="/buy-now/{{products._id}}" class="btn"
+                                    style="color: black; background-color: orange;">Buy
+                                    Now</a>
+                            </div>
+                            {{/if}}
+                            <br>
+                            <h6 style="color: rgb(0, 0, 0);font-style: italic;">About</h6>
+                            <p>{{products.product_description}}</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+</script>
+<script src="/javascripts/script.js"></script>

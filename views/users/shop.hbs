@@ -1,0 +1,391 @@
+<style>
+    /*
+    DEMO STYLE
+*/
+
+
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: #fafafa;
+    }
+
+    p {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.1em;
+        font-weight: 300;
+        line-height: 1.7em;
+        color: #999;
+    }
+
+    a,
+    a:hover,
+    a:focus {
+        color: inherit;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+
+    .navbar {
+        padding: 15px 10px;
+        background: #fff;
+        border: none;
+        border-radius: 0;
+        margin-bottom: 40px;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-btn {
+        box-shadow: none;
+        outline: none !important;
+        border: none;
+    }
+
+    .line {
+        width: 100%;
+        height: 1px;
+        border-bottom: 1px dashed #ddd;
+        margin: 40px 0;
+    }
+
+    /* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+    .wrapper {
+        display: flex;
+        width: 100%;
+    }
+
+    #sidebar {
+        min-width: 250px;
+        max-width: 250px;
+        background: #010a2e;
+        color: #fff;
+        transition: all 0.3s;
+    }
+
+    #sidebar.active {
+        margin-left: -250px;
+    }
+
+    #sidebar .sidebar-header {
+        padding: 20px;
+        background: #6d7fcc;
+    }
+
+    #sidebar ul.components {
+        padding: 20px 0;
+        border-bottom: 1px solid #47748b;
+    }
+
+    #sidebar ul p {
+        color: #fff;
+        padding: 10px;
+    }
+
+    #sidebar ul li a {
+        padding: 10px;
+        font-size: 1.1em;
+        display: block;
+    }
+
+    #sidebar ul li a:hover {
+        color: #7386D5;
+        background: #fff;
+    }
+
+    #sidebar ul li.active>a,
+    a[aria-expanded="true"] {
+        color: #fff;
+        background: #6d7fcc;
+    }
+
+    a[data-toggle="collapse"] {
+        position: relative;
+    }
+
+    .dropdown-toggle::after {
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+    }
+
+    ul ul a {
+        font-size: 0.9em !important;
+        padding-left: 30px !important;
+        background: #6d7fcc;
+    }
+
+    ul.CTAs {
+        padding: 20px;
+    }
+
+    ul.CTAs input {
+        text-align: center;
+        font-size: 0.9em !important;
+        display: block;
+        border-radius: 5px;
+        margin-bottom: 5px;
+    }
+
+    input.download {
+        background: #fff;
+        color: #7386D5;
+    }
+
+    input.article,
+    input.article:hover {
+        background: #6d7fcc !important;
+        color: #fff !important;
+    }
+
+
+    /* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+    #content {
+        width: 100%;
+        padding: 20px;
+        min-height: 100vh;
+        transition: all 0.3s;
+    }
+
+    .wrapper {
+        height: max-content;
+    }
+
+    /* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+    @media (max-width: 768px) {
+        #sidebar {
+            margin-left: -250px;
+        }
+
+        #sidebar.active {
+            margin-left: 0;
+        }
+
+        #sidebarCollapse span {
+            display: none;
+        }
+    }
+</style>
+<!-- MINI HEADER -->
+<div id="top-header">
+
+    <div class="container d-flex justify-content-between">
+        <ul class="header-links p-3">
+        </ul>
+        <ul class="header-links text-uppercase">
+            <li><a href="/about" style="font-size: 15px;"> About</a></li>
+            <li><a href="/contactUs" style="font-size: 15px;"> contact Us </a></li>
+            <li><a href="/" style="font-size: 15px;"> HOME</a></li>
+            <li><a href="/shop" style="font-size: 15px;">SHOP</a></li>
+            <li>
+                <form action="/searchProduct" method="post" class="d-flex">
+                    <input name="key" class="form-control me-2" type="search" placeholder="Search"
+                        aria-label="Search" />
+                    {{! <button class="btn btn-outline-success" type="submit">Search</button> }}
+                </form>
+            </li>
+        </ul>
+        <ul style="display: flex; gap: 1rem">
+            <li><a href="/cart"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-cart3 ps-0" viewBox="0 0 16 16">
+                        <path
+                            d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z">
+                        </path>
+                    </svg><span class="badge bg-dark">{{cartCount}}</span></a></li>
+            <li>
+
+            </li>
+            <li><a href="/wishlist"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-star ml-5" viewBox="0 0 16 16">
+                        <path
+                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z">
+                        </path>
+                    </svg><span class="badge bg-dark">{{wishList}}</span>
+                </a></li>
+        </ul>
+    </div>
+
+</div>
+<!-- /MINI HEADER -->
+
+{{!-- sidebar start --}}
+<form id="categoryFilter" method="post">
+    <div class="wrapper">
+        <!-- Sidebar  -->
+
+        <nav id="sidebar" class="p-4">
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#homeSubmenu" data-bs-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Categorys</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <input type="checkbox" name="categoryName" value="" hidden checked>
+                        {{#each category}}
+                        <li>
+                            <input class="mt-3" type="checkbox" name="categoryName" href="#"
+                                value="{{this.category}}">{{this.category}}</input>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </li>
+                <li>
+                    <a href="#pageSubmenu" data-bs-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Price</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <div class="sidebar__sizes">
+                            <div class="size__list -1 ">
+                                <div class="form-check ">
+                                    <input class="form-check-input" type="radio" id="price" name="price" hidden checked
+                                        value="500000">
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" id="price" name="price" value="1000">
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        Below ₹ 1000
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" id="price" name="price" value="2000">
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        Below ₹ 2000
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" id="price" name="price" value="3000">
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        Below ₹ 3000
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" id="price" name="price" value="4000">
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        Below ₹ 4000
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" id="price" name="price" value="5000">
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        Below ₹ 5000
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" id="price" name="price" value="10000">
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        Below ₹ 10000
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" id="price" name="price" value="20000">
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        Below ₹ 20000
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" id="price" name="price" value="500000">
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        ₹0.00 to ₹500000
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+
+            {{!-- <nav class="navbar navbar-expand-lg navbar-light bg-light"> --}}
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn" style="background-color: #010c3f;">
+                        <i class="bi bi-filter"></i>
+                        {{!-- <span>Filter</span> --}}
+                    </button>
+
+                </div>
+                {{!--
+            </nav> --}}
+
+            <section>
+                <div class="container mt-2">
+                    <div class="row" id="productsdiv">
+                        {{#each productss}}
+                        <div class="col-md-3 d-flex justify-content-center">
+                            <div class="card shadow mt-5 " style="width: 18rem;">
+                                <a class="btn" onclick="add_to_wishlist('{{this._id}}')"><i
+                                        class="bi bi-heart d-flex justify-content-end mt-2 p-2"></i></a>
+                                <a href="/viewSingleProductDetails/{{this._id}}">
+                                    <img src="/product-images/{{this.images.[0].filename}}" class="card-img-top"
+                                        style="height: 16rem; width: 17.9rem;" alt="..." />
+                                    <div class="card-body mt-0" style="height: 10rem;">
+                                        <h5 class="card-title d-flex justify-content-center">{{this.title}}</h5>
+                                        <br>
+                                        {{#if this.out}}
+                                        <p class="card-text d-flex justify-content-center text-danger"><b>Out Of
+                                                Stock</b></p>
+                                        {{else}}
+                                        <p class="card-text d-flex justify-content-center"><b>₹{{this.price}}</b></p>
+                                        {{/if}}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+        </div>
+        </section>
+    </div>
+</form>
+{{!-- sidebar end --}}
+{{!-- card start --}}
+
+
+{{!-- card end --}}
+<script src="/javascripts/script.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    }); 
+</script>
+<script>
+    $('input[name=categoryName]').change(function () {
+        $.ajax({
+            url: '/products/filter',
+            method: 'post',
+            data: $('#categoryFilter').serialize(),
+            success: (response) => {
+                if (response) {
+
+                    $('#productsdiv').load(location.href + " #productsdiv");
+                }
+            }
+        })
+    });
+    $('input[name=price]').change(function () {
+        $.ajax({
+            url: '/products/filter',
+            method: 'post',
+            data: $('#categoryFilter').serialize(),
+            success: (response) => {
+                if (response) {
+                    $('#productsdiv').load(location.href + " #productsdiv");
+                }
+            }
+        })
+    })
+</script>

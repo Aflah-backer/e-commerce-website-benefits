@@ -1,0 +1,147 @@
+<div class="container">
+
+
+    <div class="row">
+        <div class=" col-md-6 col-lg-4 mx-auto " onload="display()">
+            <h1 class="  mb-5 mt-5 ms-5">Add New Product </h1>
+            <form action="/admin/add-products" method="POST" enctype="multipart/form-data" id="add-product-form">
+
+                <table class="table table-borderless">
+                    <tr>
+                        <td>
+                            <p class="opacity-75 ">Title</p>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="title" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="opacity-75">Brand</p>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="brand" aria-describedby="emailHelp">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="opacity-75">Price</p>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="price" min="0">
+                        </td>
+                    </tr>
+                    <td>
+                        <p class="opacity-75">Category</p>
+                    </td>
+                    <td>
+                        <select class="form-select opacity-75 " name="category" aria-label="Default select example">
+                            {{#each category}}
+                            <option type="button" name="category">{{this.category}}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="opacity-75">Quantity</p>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="quantity" min="0">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label" for="product_description">Product Description</label>
+                        <td>
+                            <textarea class="form-control" style="height: 25rem;" id="product_description"
+                                name="product_description"></textarea>
+                        </td>
+                        </td>
+                    </tr>
+                </table>
+
+
+
+        </div>
+        <div class="col-md-6 mt-5 ">
+            <div class="ms-5">
+                <h1 class="fs-2 text-dark mb-5 ms-5">Choose Images </h1>
+            </div>
+            <div class="row">
+
+                <div class="col-md-6 col-12">
+
+
+                    <input type="file" accept="image/*" name="image" id="imgfile" onchange="loadFile1(event)">
+
+                    <p><img id="img1" width="200" height="200" /></p>
+
+
+                </div>
+                <div class="col-md-6 col-12">
+
+
+                    <input type="file" accept="image/*" name="image" id="imgfile" onchange="loadFile2(event)">
+
+                    <p><img id="img2" width="200" height="200"></p>
+                </div>
+
+
+            </div>
+            <div class="row">
+
+                <div class="col-md-6 col-12">
+
+                    <input type="file" accept="image/*" name="image" id="imgfile" onchange="loadFile3(event)">
+
+                    <p><img id="img3" width="200" height="200" /></p>
+
+
+                </div>
+                <div class="col-md-6 col-12">
+
+
+                    <input type="file" accept="image/*" name="image" id="imgfile" onchange="loadFile4(event)">
+
+                    <p><img id="img4" width="200" height="200"></p>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="d-flex justify-content-center mt-5 mb-5 ">
+            <input class="btn btn-success " type="submit" value="Add Products">
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+
+<script>
+
+    var loadFile1 = function (event) {
+        const img = document.getElementById('img1')
+        img.src = URL.createObjectURL(event.target.files[0]);
+        console.log(event.target.files[0])
+    };
+
+    var loadFile2 = function (event) {
+        const img = document.getElementById('img2')
+        img.src = URL.createObjectURL(event.target.files[0]);
+    };
+    var loadFile3 = function (event) {
+        const img = document.getElementById('img3')
+        img.src = URL.createObjectURL(event.target.files[0]);
+    };
+    var loadFile4 = function (event) {
+        const img = document.getElementById('img4')
+        img.src = URL.createObjectURL(event.target.files[0]);
+    };
+
+
+</script>

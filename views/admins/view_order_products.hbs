@@ -1,0 +1,40 @@
+<section>
+    <div class="container mt-4 ">
+        <div class="table-responsive">
+            <table class="table table-light table-striped" id="orderTable">
+                <thead>
+                    <tr>
+                        <th scope="col-md-3">Image</th>
+                        <th scope="col-md-3">Name</th>
+                        <th scope="col-md-3">Brand</th>
+                        <th scope="col-md-3">Category</th>
+                        <th scope="col-md-3">Price</th>
+                        <th scope="col-md-3">#####</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each products}}
+                    <tr>
+                        <th scope="row" style="width: 14rem;"><img style="width: 110px;height: 110px;"
+                                class="card-shadow" src="/product-images/{{this.products.images.[0].filename}}" alt="">
+                        </th>
+                        <th scope="rew" style="width: 14rem;">{{this.products.title}}</th>
+                        <td scope="row" style="width: 14rem;">{{this.products.brand}}</td>
+                        <td scope="row" style="width: 14rem;">{{this.products.category}}</td>
+                        <td scope="row" style="width: 14rem;">₹{{this.products.price}}</td>
+                        <td scope="row" style="width: 14rem;">{{this.date}}</td>
+
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        $('#orderTable').dataTable()
+    })
+</script>
