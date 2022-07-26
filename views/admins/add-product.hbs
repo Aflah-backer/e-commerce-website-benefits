@@ -20,7 +20,7 @@
                             <p class="opacity-75">Brand</p>
                         </td>
                         <td>
-                            <input type="text" class="form-control" name="brand" aria-describedby="emailHelp">
+                            <input type="text" class="form-control" name="brand" aria-describedby="emailHelp" required>
                         </td>
                     </tr>
                     <tr>
@@ -28,7 +28,7 @@
                             <p class="opacity-75">Price</p>
                         </td>
                         <td>
-                            <input type="number" class="form-control" name="price" min="0">
+                            <input type="number" class="form-control" name="price" min="0" required>
                         </td>
                     </tr>
                     <td>
@@ -47,7 +47,7 @@
                             <p class="opacity-75">Quantity</p>
                         </td>
                         <td>
-                            <input type="number" class="form-control" name="quantity" min="0">
+                            <input type="number" class="form-control" name="quantity" min="0" required>
                         </td>
                     </tr>
                     <tr>
@@ -55,7 +55,7 @@
                             <label class="control-label" for="product_description">Product Description</label>
                         <td>
                             <textarea class="form-control" style="height: 25rem;" id="product_description"
-                                name="product_description"></textarea>
+                                name="product_description" required></textarea>
                         </td>
                         </td>
                     </tr>
@@ -73,7 +73,7 @@
                 <div class="col-md-6 col-12">
 
 
-                    <input type="file" accept="image/*" name="image" id="imgfile" onchange="loadFile1(event)">
+                    <input type="file" accept="image/*" name="image" id="imgfile" onchange="loadFile1(event)" required>
 
                     <p><img id="img1" width="200" height="200" /></p>
 
@@ -82,7 +82,7 @@
                 <div class="col-md-6 col-12">
 
 
-                    <input type="file" accept="image/*" name="image" id="imgfile" onchange="loadFile2(event)">
+                    <input type="file" accept="image/*" name="image" id="imgfile" onchange="loadFile2(event)" required>
 
                     <p><img id="img2" width="200" height="200"></p>
                 </div>
@@ -93,7 +93,7 @@
 
                 <div class="col-md-6 col-12">
 
-                    <input type="file" accept="image/*" name="image" id="imgfile" onchange="loadFile3(event)">
+                    <input type="file" accept="image/*" name="image" id="imgfile" onchange="loadFile3(event)" required>
 
                     <p><img id="img3" width="200" height="200" /></p>
 
@@ -102,7 +102,7 @@
                 <div class="col-md-6 col-12">
 
 
-                    <input type="file" accept="image/*" name="image" id="imgfile" onchange="loadFile4(event)">
+                    <input type="file" accept="image/*" name="image" id="imgfile" onchange="loadFile4(event)" required>
 
                     <p><img id="img4" width="200" height="200"></p>
                 </div>

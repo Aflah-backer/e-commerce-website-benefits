@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 const objectId = require("mongodb").ObjectId;
 const Razorpay = require("razorpay");
 const { reject } = require("bcrypt/promises");
-const { response } = require("../app");
 const moment = require("moment");
 require("dotenv").config();
 
@@ -94,6 +93,7 @@ module.exports = {
     let proObj = {
       item: objectId(proId),
       proCount: 1,
+      deliveryStatus: "Order Placed",
     };
     return new Promise(async (resolve, reject) => {
       try {
@@ -214,9 +214,7 @@ module.exports = {
   },
 
   deleteCartProduct: (details) => {
-    console.log(true);
     return new Promise((resolve, reject) => {
-      console.log(1234567890);
       db.get()
         .collection(collection.CART_COLLECTION)
         .updateOne(
@@ -226,7 +224,6 @@ module.exports = {
           }
         )
         .then((response) => {
-          console.log(response);
           resolve({ removeProduct: true });
         });
     });
@@ -344,11 +341,10 @@ module.exports = {
         products: products,
         totalAmount: total,
         status: status,
-        deliveryStatus: "Order Placed",
         date: date,
         time: time,
       };
-
+      products.deliveryStatus = "Order Placed";
       db.get()
         .collection(collection.ORDER_COLLECTION)
         .insertOne(orderObj)
@@ -371,7 +367,13 @@ module.exports = {
   },
 
   placeOrderBuy: (order, product, total) => {
-    let products = [{ item: new objectId(product._id), proCount: 1 }];
+    let products = [
+      {
+        item: new objectId(product._id),
+        proCount: 1,
+        deliveryStatus: "Order Placed",
+      },
+    ];
     return new Promise((resolve, reject) => {
       let dateIso = new Date();
       let date = moment(dateIso).format("YYYY/MM/DD");
@@ -392,7 +394,6 @@ module.exports = {
         products: products,
         totalAmount: total,
         status: status,
-        deliveryStatus: "Order Placed",
         date: date,
         time: time,
       };
@@ -450,6 +451,8 @@ module.exports = {
               status: "$status",
               deliveryDetails: "$deliveryDetails",
               proCount: "$products.proCount",
+              deliveryStatus: "$products.deliveryStatus",
+              isCancelled: "$products.isCancelled"
             },
           },
           {
@@ -470,6 +473,8 @@ module.exports = {
               totalAmount: 1,
               proCount: 1,
               paymentMethod: 1,
+              deliveryStatus: 1,
+              isCancelled:1,
               products: { $arrayElemAt: ["$product", 0] },
             },
           },
@@ -659,7 +664,6 @@ module.exports = {
               },
             }
           );
-        console.log(response);
         resolve();
       } catch (error) {
         reject(error);
@@ -791,7 +795,6 @@ module.exports = {
   },
 
   searchProducts: (search) => {
-    console.log(search);
     return new Promise(async (resolve, reject) => {
       try {
         let products = await db
@@ -808,7 +811,6 @@ module.exports = {
             ],
           })
           .toArray();
-        console.log(products);
         resolve(products);
       } catch (error) {
         reject(error);
@@ -834,7 +836,6 @@ module.exports = {
     return new Promise(async (resolve, reject) => {
       try {
         const newPassword = await bcrypt.hash(password, 10);
-        console.log(newPassword);
         user = await db
           .get()
           .collection(collection.USER_COLLECTION)
@@ -848,26 +849,7 @@ module.exports = {
       }
     });
   },
-
-  getBrands: () => {
-    return new Promise(async (resolve, reject) => {
-      const brand = await db
-        .get()
-        .collection(collection.PRODUCT_COLLECTION)
-        .aggregate([
-          {
-            $group: {
-              _id: {
-                brand: "$brand",
-              },
-            },
-          },
-        ])
-        .toArray();
-      resolve(brand);
-    });
-  },
-
+  
   getAddress: (userId) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -894,8 +876,154 @@ module.exports = {
           ])
           .limit(1)
           .toArray();
-        console.log(address);
         resolve(address);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
+
+  getAllDetails: (useId, proId) => {
+    return new Promise(async (resolve, reject) => {
+      const result = await db
+        .get()
+        .collection(collection.ORDER_COLLECTION)
+        .aggregate([
+          {
+            $match: {
+              userId: new objectId(useId),
+            },
+          },
+          {
+            $unwind: {
+              path: "$products",
+            },
+          },
+          {
+            $project: {
+              product: "$products.item",
+              deliveryDetails: "$deliveryDetails",
+              paymentMethod: "$paymentMethod",
+              deliveryStatus: "$deliveryStatus",
+              date: "$date",
+              totalAmount: "$totalAmount",
+              proCount: "$products.proCount",
+              deliveryStatus: "$products.deliveryStatus",
+            },
+          },
+          {
+            $match: {
+              product: new objectId(proId),
+            },
+          },
+          {
+            $lookup: {
+              from: "product",
+              localField: "product",
+              foreignField: "_id",
+              as: "product",
+            },
+          },
+          {
+            $unwind: {
+              path: "$product",
+            },
+          },
+        ])
+        .toArray();
+      resolve(result);
+    });
+  },
+
+  getDetailsInvoice: (orderId, proId) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const details = await db
+          .get()
+          .collection(collection.ORDER_COLLECTION)
+          .aggregate([
+            {
+              $match: {
+                _id: new objectId(orderId),
+              },
+            },
+            {
+              $unwind: {
+                path: "$products",
+              },
+            },
+            {
+              $match: {
+                "products.item": new objectId(proId),
+              },
+            },
+            {
+              $project: {
+                products: "$products.item",
+                proCount: "$products.proCount",
+                paymentMethod: "$paymentMethod",
+                paymentStatus: "$status",
+                date: "$date",
+                time: "$time",
+                deliveryDetails: "$deliveryDetails",
+              },
+            },
+            {
+              $lookup: {
+                from: "product",
+                localField: "products",
+                foreignField: "_id",
+                as: "product",
+              },
+            },
+            {
+              $unwind: {
+                path: "$product",
+              },
+            },
+            {
+              $project: {
+                proCount: 1,
+                paymentMethod: 1,
+                paymentStatus: 1,
+                date: 1,
+                time: 1,
+                deliveryDetails: 1,
+                totalAmount: {
+                  $sum: { $multiply: ["$proCount", "$product.price"] },
+                },
+                product: "$product",
+              },
+            },
+          ])
+          .toArray();
+        resolve(details);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
+
+  cancelOder: (data) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await db
+          .get()
+          .collection(collection.ORDER_COLLECTION)
+          .updateOne(
+            {
+              _id: objectId(data.orderId),
+              "products.item": objectId(data.proId),
+            },
+            {
+              $set: {
+                "products.$.deliveryStatus": "cancel",
+                "products.$.isCancelled": true,
+              },
+            }
+          );
+        console.log(responce);
+        resolve(response);
       } catch (error) {
         reject(error);
       }

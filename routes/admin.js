@@ -52,9 +52,8 @@ router.get("/dashboard", verifyAdmin, async (req, res, next) => {
       adminHelper.getAllActiveUsers(),
       adminHelper.getPaymentStatus(),
       adminHelper.getDeliveryStatus(),
-      adminHelper.getRecentSale()
+      adminHelper.getRecentSale(),
     ]);
-    console.log(all[6]);
     const Alogged = req.session.admin;
     const [totalActiveUser] = all[3];
     res.render("admins/dashboard", {
@@ -66,7 +65,7 @@ router.get("/dashboard", verifyAdmin, async (req, res, next) => {
       activeUsers: totalActiveUser.false,
       paymentStatus: all[4],
       deliveryStatus: all[5],
-      recentSale: all[6]
+      recentSale: all[6],
     });
   } catch (error) {
     next(error);
@@ -138,7 +137,6 @@ router.post("/editProducts/:id", store.array("image", 4), (req, res, next) => {
     error.httpStatus = 400;
     return next(error);
   }
-  console.log(req.body);
   adminHelper
     .updateProduct(req.params.id, req.body, files)
     .then(() => {
@@ -223,19 +221,16 @@ router.get("/productDetails/:id", verifyAdmin, async (req, res, next) => {
   res.render("admins/view_order_products", { products, admin: true });
 });
 
-router.post("/changeDeliveryStatus", async (req, res, next) => {
+router.post("/changeDeliveryStatus",verifyAdmin, async (req, res, next) => {
   try {
-    const response = await adminHelper.changeDeliveryStatus(
-      req.body.delivery,
-      req.body.ordersId
-    );
+    const response = await adminHelper.changeDeliveryStatus(req.body);
     res.json(response);
   } catch (error) {
     next(error);
   }
 });
 
-router.get("/delete-category/:id", async (req, res, next) => {
+router.get("/delete-category/:id",verifyAdmin, async (req, res, next) => {
   try {
     const category = await adminHelper.deleteCategory(req.params.id);
     res.redirect("/admin/category");
@@ -243,14 +238,4 @@ router.get("/delete-category/:id", async (req, res, next) => {
     next(error);
   }
 });
-
-// router.get("/paymentStatus", verifyAdmin, async (req, res, next) => {
-//   try {
-//     const paymentStatus = await adminHelper.getPaymentStatus();
-
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
 module.exports = router;

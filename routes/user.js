@@ -130,15 +130,13 @@ router.get("/cart", verifyLogin, async (req, res, next) => {
   }
 });
 
-router.post("/remove_product", (req, res, next) => {
-  userHelpers
-    .deleteCartProduct(req.body)
-    .then((response) => {
-      res.json(response);
-    })
-    .catch((error) => {
-      next(error);
-    });
+router.post("/remove_product", async (req, res, next) => {
+  try {
+    const response = await userHelpers.deleteCartProduct(req.body);
+    res.json(response);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.get("/add-to-cart/:id", verifyLogin, (req, res, next) => {
@@ -160,7 +158,6 @@ router.post("/change-product-proCout", (req, res, next) => {
 
 router.get("/place_order/:id", verifyLogin, async (req, res, next) => {
   try {
-    console.log(req.params.id);
     const params = req.params.id;
     if ("buyNow" === params) {
       req.session.status = true;
@@ -168,7 +165,6 @@ router.get("/place_order/:id", verifyLogin, async (req, res, next) => {
       const address = await userHelpers.getAddress(logged._id);
       const product = req.session.buyProduct;
       let total = product.price;
-      console.log(address);
       res.render("users/place_order", {
         logged,
         user: true,
@@ -180,14 +176,14 @@ router.get("/place_order/:id", verifyLogin, async (req, res, next) => {
       req.session.status = false;
       const logged = req.session.user;
       const all = await Promise.all([
-        userHelpers.getOrders(logged._id),
+        userHelpers.getAddress(logged._id),
         userHelpers.getTotalAmount(logged._id),
       ]);
       res.render("users/place_order", {
         logged,
+        address: all[0],
         total: all[1],
         user: true,
-        address: all[0],
       });
     }
   } catch (error) {
@@ -201,7 +197,6 @@ router.post("/place_order", verifyLogin, async (req, res, next) => {
       const product = req.session.buyProduct;
       const total = product.price;
       const orderId = await userHelpers.placeOrderBuy(req.body, product, total);
-      console.log();
       if (req.body["payment-method"] === "COD") {
         res.json({ codSuccess: true });
       } else {
@@ -276,9 +271,17 @@ router.get("/orders", verifyLogin, async (req, res, next) => {
 
 router.get("/view-single-orders/:id", verifyLogin, async (req, res) => {
   try {
-    console.log(req.params.id);
     const logged = req.session.user;
-    res.render("users/view_single_orders", { user: true, logged });
+    const orderDetails = await userHelpers.getAllDetails(
+      logged._id,
+      req.params.id
+    );
+
+    res.render("users/view_single_orders", {
+      user: true,
+      logged,
+      orderDetails,
+    });
   } catch (error) {
     next(error);
   }
@@ -291,7 +294,6 @@ router.get("/wishlist", verifyLogin, async (req, res, next) => {
       req.session.user._id
     );
     if (products.length != 0) {
-      console.log(products.length);
       let out;
       for (i = 0; i < products.length; i++) {
         products[i].product.out = products[i].product.quantity < 1;
@@ -476,8 +478,6 @@ router.post("/reVerify", (req, res) => {
 
 router.post("/reSetPassword", async (req, res, next) => {
   try {
-    console.log(req.body);
-    console.log(req.session.setOtp._id, "what is this");
     const result = await userHelpers.setNewPassword(
       req.session.setOtp._id,
       req.body.password
@@ -488,4 +488,23 @@ router.post("/reSetPassword", async (req, res, next) => {
   }
 });
 
+router.post("/invoice", verifyLogin, async (req, res, next) => {
+  try {
+    const logged = req.session.user;
+    const { orderId, proId } = req.body;
+    const invoiceDetails = await userHelpers.getDetailsInvoice(orderId, proId);
+    res.render("users/invoice", { user: true, logged, invoiceDetails });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/cancelOrder", async (req, res, next) => {
+  try {
+    const response = await userHelpers.cancelOder(req.body);
+    res.json(response);
+  } catch (error) {
+    next(error);
+  }
+});
 module.exports = router;

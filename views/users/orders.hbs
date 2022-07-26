@@ -18,31 +18,24 @@
             <td scope="row">
               <h6 style="margin-top: 4.5rem;">{{this.products.title}}</h6>
             </td>
-            {{!-- <td scope="row" style="width: 14rem;">Date: {{this.date}}
-              Time: {{this.time}}
-            </td> --}}
-            {{!-- <td scope="row" style="width: 14rem;">{{this.deliveryDetails.firstName}}</td> --}}
             <td scope="row" style="width: 14rem;">
               <h6 style="margin-top: 4.5rem;">₹ {{this.products.price}}</h6>
             </td>
-            {{!-- <td scope="row" style="width: 14rem;">Quantity: {{this.proCount}}</td> --}}
-            {{!-- <td scop="row" style="width: 14rem;">{{this.deliveryDetails.address}}</td> --}}
-            {{!-- <td scope="row" style="width: 14rem;">
-              <h6>Order Status: </h6>
-              <p class="text-success">{{this.status}}</p>
-            </td> --}}
             <td scope="row" style="width: 14rem;">
               <h6 style="margin-top: 4.5rem;">{{this.deliveryStatus}}</h6>
               <p class="text-dark"> </p>
             </td>
             <td scope="row" style="width: 14rem;">
               <p style="margin-top: 4rem;">
-                <button type="button" class="btn btn-tra btn-danger" data-mdb-toggle="tooltip" title="Remove item"
-                  id="RemoveProduct" onclick="removeProduct">Cancel Order
+                {{#if this.isCancelled}}
+                  <h6 class="text-danger">Cancelled</h6>
+                {{else}}
+                <button type="button" class="btn text-danger" data-mdb-toggle="tooltip" title="Remove item"
+                  id="RemoveProduct" onclick="cancelOrder('{{this._id}}','{{this.products._id}}')">Cancel Order
                 </button>
+                {{/if}}
               </p>
             </td>
-            {{!-- <td scope="row" style="width: 14rem;">{{this.paymentMethod}} </td> --}}
           </tr>
 
           {{/each}}
@@ -51,9 +44,36 @@
     </div>
   </div>
 </section>
-<script>
-  $(document).ready(function () {
-    $('#productsTable').dataTable()
-  })
 
+<script>
+  function cancelOrder(orderId, proId) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, cancel it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: "/cancelOrder",
+          data: {
+            orderId: orderId,
+            proId: proId
+          },
+          method: "post",
+          success: (response) => { },
+        })
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    }).then(() => {
+      location.reload();
+    })
+  }
 </script>

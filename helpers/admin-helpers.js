@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 const { reject } = require("bcrypt/promises");
 const objectId = require("mongodb").ObjectId;
 
-
 // const store = require("../middleware/multer");
 
 module.exports = {
@@ -159,7 +158,6 @@ module.exports = {
   },
 
   updateProduct: (proId, proDetails, imagesData) => {
-    console.log(proDetails);
     return new Promise(async (resolve, reject) => {
       try {
         const response = await db
@@ -179,7 +177,6 @@ module.exports = {
               },
             }
           );
-        console.log(response);
         resolve();
       } catch (error) {
         reject(error);
@@ -257,6 +254,11 @@ module.exports = {
             },
             {
               $unwind: {
+                path: "$products",
+              },
+            },
+            {
+              $unwind: {
                 path: "$product",
               },
             },
@@ -274,17 +276,20 @@ module.exports = {
     });
   },
 
-  changeDeliveryStatus: (delivery, orderId) => {
+  changeDeliveryStatus: (data) => {
     return new Promise(async (resolve, reject) => {
       try {
         const deliveryStatus = await db
           .get()
           .collection(collection.ORDER_COLLECTION)
           .updateOne(
-            { _id: objectId(orderId) },
+            {
+              _id: objectId(data.ordersId),
+              "products.item": objectId(data.proId),
+            },
             {
               $set: {
-                deliveryStatus: delivery,
+                "products.$.deliveryStatus": data.delivery,
               },
             }
           );
@@ -303,7 +308,6 @@ module.exports = {
           .collection(collection.CATEGORY_COLLECTION)
           .deleteOne({ _id: objectId(categoryId) });
         resolve(removedCategory);
-        console.log(removedCategory);
       } catch (error) {
         reject(error);
       }
@@ -358,7 +362,7 @@ module.exports = {
       }
     });
   },
-  
+
   getAllActiveUsers: () => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -456,8 +460,13 @@ module.exports = {
           .collection(collection.ORDER_COLLECTION)
           .aggregate([
             {
+              $unwind: {
+                path: "$products",
+              },
+            },
+            {
               $match: {
-                deliveryStatus: "Order Placed",
+                "products.deliveryStatus": "Order Placed",
               },
             },
           ])
@@ -469,8 +478,13 @@ module.exports = {
           .collection(collection.ORDER_COLLECTION)
           .aggregate([
             {
+              $unwind: {
+                path: "$products",
+              },
+            },
+            {
               $match: {
-                deliveryStatus: "shipped",
+                "products.deliveryStatus": "shipped",
               },
             },
           ])
@@ -482,8 +496,13 @@ module.exports = {
           .collection(collection.ORDER_COLLECTION)
           .aggregate([
             {
+              $unwind: {
+                path: "$products",
+              },
+            },
+            {
               $match: {
-                deliveryStatus: "delivered",
+                "products.deliveryStatus": "delivered",
               },
             },
           ])
@@ -495,8 +514,13 @@ module.exports = {
           .collection(collection.ORDER_COLLECTION)
           .aggregate([
             {
+              $unwind: {
+                path: "$products",
+              },
+            },
+            {
               $match: {
-                deliveryStatus: "cancel",
+                "products.deliveryStatus": "cancel",
               },
             },
           ])

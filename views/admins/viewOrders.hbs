@@ -30,27 +30,33 @@
                         Pincode: {{this.deliveyDetails.pincode}}</td>
                     <td scope="row" style="width: 14rem;"> ₹{{this.totalAmount}}</td>
                     <td scope="row" style="width: 14rem;">
+                        {{#if this.products.isCancelled}}
+                        <h6 class="text-danger">--------</h6>
+                        {{else}}
                         <button type="button" class="btn btn-success mt-4" data-bs-toggle="modal"
                             data-bs-target="#exampleModal{{this._id}}">
-                            {{this.deliveryStatus}}
+                            {{this.products.deliveryStatus}}
                         </button>
-
+                        {{/if}}
                         <div class="modal fade" id="exampleModal{{this._id}}" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">Status</h5>
-                                        <button type="button" class="close btn btn-dark" data-bs-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="close btn btn-dark" data-bs-dismiss="modal"
+                                            aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form id="changeStatus{{this._id}}"
-                                            onsubmit="changeDeliveryStatus('{{this._id}}')">
+                                        <form id="changeStatus"
+                                            onsubmit="changeDeliveryStatus('{{this._id}}','{{this.product._id}}')">
                                             <input type="text" value="{{this._id}}" name="ordersId" hidden>
+                                            <input type="text" name="proId" value="{{this.product._id}}" hidden>
                                             <select class="form-select" name="delivery" id="">
-                                                <option value="">{{this.deliveryStatus}}</option>
+                                                <option value="{{this.products.deliveryStatus}}">
+                                                    {{this.products.deliveryStatus}}</option>
                                                 <option value="shipped">Shipped</option>
                                                 <option onclick="" value="delivered">Delivered</option>
                                                 <option onclick="" value="cancel">Cancel</option>
@@ -76,11 +82,11 @@
 </script>
 
 <script>
-    function changeDeliveryStatus(orderId) {
+    function changeDeliveryStatus(orderId, proId) {
         $.ajax({
             url: '/admin/changeDeliveryStatus',
             method: 'post',
-            data: $('#changeStatus' + orderId).serialize(),
+            data: $('#changeStatus').serialize(),
             success: (response) => {
                 if (response) {
                     location.reload()

@@ -4,7 +4,6 @@ function add_to_wishlist(proId) {
     url: "/addToWishList/" + proId,
     method: "get",
     success: (response) => {
-      console.log(response);
       if (response.added) {
         Swal.fire({
           position: "top-center",
