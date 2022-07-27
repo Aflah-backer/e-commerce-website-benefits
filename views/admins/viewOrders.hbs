@@ -31,7 +31,7 @@
                     <td scope="row" style="width: 14rem;"> ₹{{this.totalAmount}}</td>
                     <td scope="row" style="width: 14rem;">
                         {{#if this.products.isCancelled}}
-                        <h6 class="text-danger">--------</h6>
+                        <h6 class="text-danger">---</h6>
                         {{else}}
                         <button type="button" class="btn btn-success mt-4" data-bs-toggle="modal"
                             data-bs-target="#exampleModal{{this._id}}">
@@ -51,9 +51,9 @@
                                     </div>
                                     <div class="modal-body">
                                         <form id="changeStatus"
-                                            onsubmit="changeDeliveryStatus('{{this._id}}','{{this.product._id}}')">
+                                            onsubmit="changeDeliveryStatus('{{this._id}}','{{this.products.item}}')">
                                             <input type="text" value="{{this._id}}" name="ordersId" hidden>
-                                            <input type="text" name="proId" value="{{this.product._id}}" hidden>
+                                            <input type="text" name="proId" value="{{this.products.item}}" hidden>
                                             <select class="form-select" name="delivery" id="">
                                                 <option value="{{this.products.deliveryStatus}}">
                                                     {{this.products.deliveryStatus}}</option>
@@ -82,7 +82,7 @@
 </script>
 
 <script>
-    function changeDeliveryStatus(orderId, proId) {
+    function changeDeliveryStatus() {
         $.ajax({
             url: '/admin/changeDeliveryStatus',
             method: 'post',

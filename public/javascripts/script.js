@@ -11,7 +11,9 @@ function add_to_wishlist(proId) {
           title: "Added to your wishlist",
           showConfirmButton: false,
           timer: 1500,
-        });
+        }).then(() => {
+          $("#wishNum").load(location.href + " #wishNum");
+        })
       } else {
         Swal.fire({
           icon: "error",

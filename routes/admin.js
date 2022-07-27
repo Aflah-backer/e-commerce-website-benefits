@@ -222,6 +222,7 @@ router.get("/productDetails/:id", verifyAdmin, async (req, res, next) => {
 });
 
 router.post("/changeDeliveryStatus",verifyAdmin, async (req, res, next) => {
+  console.log(req.body);
   try {
     const response = await adminHelper.changeDeliveryStatus(req.body);
     res.json(response);

@@ -10,9 +10,15 @@
 
           <tr style="height: 6rem;">
 
-            <td scope="row" style="width: 14rem;" class="p-3"> <a href="/view-single-orders/{{this.products._id}}"><img
-                  class="shadow p-3 mt-2 rounded" style="width: 140px; height: 140px;"
-                  src="/product-images/{{this.products.images.[0].filename}}" alt=""></a>
+            <td scope="row" style="width: 14rem;" class="p-3">
+              {{#if this.isCancelled}}
+              <img class="shadow p-3 mt-2 rounded" style="width: 140px; height: 140px;"
+                src="/product-images/{{this.products.images.[0].filename}}" alt="">
+              {{else}}
+              <a href="/view-single-orders/{{this.products._id}}"><img class="shadow p-3 mt-2 rounded"
+                  style="width: 140px; height: 140px;" src="/product-images/{{this.products.images.[0].filename}}"
+                  alt=""></a>
+              {{/if}}
             </td>
 
             <td scope="row">
@@ -28,12 +34,12 @@
             <td scope="row" style="width: 14rem;">
               <p style="margin-top: 4rem;">
                 {{#if this.isCancelled}}
-                  <h6 class="text-danger">Cancelled</h6>
-                {{else}}
-                <button type="button" class="btn text-danger" data-mdb-toggle="tooltip" title="Remove item"
-                  id="RemoveProduct" onclick="cancelOrder('{{this._id}}','{{this.products._id}}')">Cancel Order
-                </button>
-                {{/if}}
+              <h6 class="text-danger">Cancelled</h6>
+              {{else}}
+              <button type="button" class="btn text-danger" data-mdb-toggle="tooltip" title="Remove item"
+                id="RemoveProduct" onclick="cancelOrder('{{this._id}}','{{this.products._id}}')">Cancel Order
+              </button>
+              {{/if}}
               </p>
             </td>
           </tr>
