@@ -452,7 +452,7 @@ module.exports = {
               deliveryDetails: "$deliveryDetails",
               proCount: "$products.proCount",
               deliveryStatus: "$products.deliveryStatus",
-              isCancelled: "$products.isCancelled"
+              isCancelled: "$products.isCancelled",
             },
           },
           {
@@ -474,7 +474,7 @@ module.exports = {
               proCount: 1,
               paymentMethod: 1,
               deliveryStatus: 1,
-              isCancelled:1,
+              isCancelled: 1,
               products: { $arrayElemAt: ["$product", 0] },
             },
           },
@@ -849,7 +849,7 @@ module.exports = {
       }
     });
   },
-  
+
   getAddress: (userId) => {
     return new Promise(async (resolve, reject) => {
       try {

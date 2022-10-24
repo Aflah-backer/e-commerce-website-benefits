@@ -14,9 +14,9 @@
                                     <p class="mb-1">Countinue Shopping</p>
                                 </div>
                             </div>
-                            <div class="container">
+                            {{#if address}} <div class="container">
                                 <div class="card text-light" style="background-color: rgb(0, 3, 51);">
-                                    <h6 class="text-uppercase text-light p-3">delivery address</h6>
+                                    <h6 class="text-uppercase text-light p-3">delivery to this address select it</h6>
                                 </div>
                                 <div class="body d-inline-flex p-2">
                                     <button type="submit" class="btn but-light"
@@ -29,7 +29,8 @@
                                 <div class="" style="padding-left: 4.5rem;">
                                     <p>{{address.[0].address.address}}-{{address.[0].address.pincode}}</p>
                                 </div>
-                            </div>
+                            </div> 
+                            {{/if}}
                             <form action="/place_order" id="checkout-form" method="post">
                                 <div class="container">
                                     <div class="card text-light" style="background-color: rgb(0, 3, 51);">

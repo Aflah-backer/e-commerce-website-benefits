@@ -202,6 +202,7 @@ router.post("/place_order", verifyLogin, async (req, res, next) => {
       } else {
         userHelpers.generateRazorpay(orderId, total).then((response) => {
           res.json(response);
+          console.log(response);
         });
       }
     } else {
@@ -397,7 +398,6 @@ router.post("/products/filter", async (req, res, next) => {
 
 router.get("/shope", async (req, res) => {
   let logged = req.session.user;
-  // let all = null;
   let cartCount = null;
   let wishList = null;
   if (logged) {

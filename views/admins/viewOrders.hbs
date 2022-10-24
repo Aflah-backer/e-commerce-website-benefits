@@ -5,7 +5,7 @@
                 <tr>
                     <th scope="col-md-3">Date</th>
                     <th scope="col-md-3">User</th>
-                    <th scope="col-md-3">Product</th>
+                    <th scope="col-md-3">Product Details</th>
                     <th scope="col-md-3">Payment Method</th>
                     <th scope="col-md-3">Delivery To</th>
                     <th scope="col-md-3">Total Amount</th>
@@ -20,8 +20,10 @@
                         Email: {{this.user.Email}} <br>
                         Mobile: {{this.user.MobNumber}} </td>
                     <td scope="row" style="width: 14rem;">Product: {{this.product.title}} <br>
-                        Brand: {{this.product.brand}}
-                        Price: ₹{{this.product.price}}</td>
+                        Brand: {{this.product.brand}}<br>
+                        Price: ₹{{this.product.price}}<br>   
+                        Quantity:{{this.products.proCount}}
+                        </td>
                     <td scope="row" style="width: 14rem;">Method: {{this.paymentMethod}}</td>
                     <td scope="row" style="width: 14rem;">Name: {{this.deliveryDetails.firstName}}
                         {{this.deliveryDetails.lastName}} <br>
