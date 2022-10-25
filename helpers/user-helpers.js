@@ -64,7 +64,8 @@ module.exports = {
   getSortedproducts: () => {
     return new Promise(async (resolve, reject) => {
       try {
-        let products = await db
+        let products = await 
+        db
           .get()
           .collection(collection.PRODUCT_COLLECTION)
           .find()
