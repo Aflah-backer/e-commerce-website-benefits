@@ -1,6 +1,6 @@
 <section>
-    <div class="container mt-4">
-        <table class="table table-dark table-striped" id="orderTable">
+    <div class="container mt-4 table-responsive">
+        <table class="table table-striped table-hover" id="orderTable">
             <thead>
                 <tr>
                     <th scope="col-md-3">Date</th>
@@ -31,9 +31,9 @@
                         Mobile: {{this.deliveryDetails.mobailNumber}} <br>
                         Pincode: {{this.deliveyDetails.pincode}}</td>
                     <td scope="row" style="width: 14rem;"> ₹{{this.totalAmount}}</td>
-                    <td scope="row" style="width: 14rem;">
+                    <td scope="row" style="width: 14rem;" >
                         {{#if this.products.isCancelled}}
-                        <h6 class="text-danger">---</h6>
+                        <h6 class="text-danger">Canceled Order</h6>
                         {{else}}
                         <button type="button" class="btn btn-success mt-4" data-bs-toggle="modal"
                             data-bs-target="#exampleModal{{this._id}}">

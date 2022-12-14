@@ -22,17 +22,4 @@ module.exports.get = () => {
   return state.db;
 };
 
-// const connectDB = async () => {
-//   try {
-//     const conn = await MongoClient.connect(process.env.MONGO, {
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true,
-//     });
-//     console.log("MongoDb connected");
-//   } catch (error) {
-//     console.log(`Error: ${error.message}`);
-//     process.exit();
-//   }
-// };
 
-// module.exports = connectDB;
